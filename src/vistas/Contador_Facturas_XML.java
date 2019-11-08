@@ -5,10 +5,13 @@
  */
 package vistas;
 
+import git.GitControl;
 import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -16,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -39,6 +43,7 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
         setResizable(false);
 
         btn_cargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JLabel_Actualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         txt_total.setEnabled(false);
 
     }
@@ -57,6 +62,8 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_total = new javax.swing.JTextArea();
+        JLabel_Actualizar = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/img/icono.png")).getImage());
@@ -81,11 +88,31 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
         txt_total.setText("Resultado:");
         jScrollPane1.setViewportView(txt_total);
 
+        JLabel_Actualizar.setText("Actualizar");
+        JLabel_Actualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JLabel_ActualizarMouseClicked(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(JLabel_Actualizar))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(321, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -104,7 +131,11 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 236, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(JLabel_Actualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -178,6 +209,34 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_cargarActionPerformed
 
+    private void JLabel_ActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabel_ActualizarMouseClicked
+
+        try {
+            String localPath = "C:/Users/reyes/OneDrive/Documentos/GitHub/Facturas_XML";
+            String remotePath = "https://github.com/xReyes/Facturas_XML";
+            GitControl gc = new GitControl(localPath, remotePath);
+            //Clone repository
+//            gc.cloneRepo();
+            //Add files to repository
+//            gc.addToRepo();
+            //Commit with a custom message
+//            gc.commitToRepo("Modified testfile.txt");
+            //Push commits
+//            gc.pushToRepo();
+            //Pull
+            gc.pullFromRepo();
+        } catch (IOException | GitAPIException ex) {
+            Logger.getLogger(Contador_Facturas_XML.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_JLabel_ActualizarMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        txt_total.setText("");
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -211,7 +270,9 @@ public class Contador_Facturas_XML extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLabel_Actualizar;
     private javax.swing.JButton btn_cargar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
